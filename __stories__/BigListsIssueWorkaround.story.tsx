@@ -114,11 +114,23 @@ const TreePresenter: FC<TreePresenterProps> = ({itemSize}) => {
   const setOpenContext = useCallback((id, value) => {
       treeRef.current?.recomputeTree({
         'Root': { // you have to open the root node.
+          open: true,
+          subtreeCallback(node: any) {
+            if (node.data.id === id) {
+              node.isOpen = value;
+            }
+          },
+        },
+
+        /*
+        you might this the following is enough, but it doesn't quite do the job
+        'Root': {
           open: true
         },
         [id]: {
           open: value
         }
+        */
       });
   }, []);
 
